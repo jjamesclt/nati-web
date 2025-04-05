@@ -226,3 +226,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# NATI
+/config/nati.php

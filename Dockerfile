@@ -1,16 +1,16 @@
 # Base image with Apache and PHP
 FROM php:8.2-apache
 
-# Enable Apache mod_rewrite if needed
-RUN a2enmod rewrite
+# Install dependencies
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
-# Copy your site into the web root
-COPY . /var/www/html/
+# Copy app files
+COPY public/ /var/www/html/
+COPY config/ /var/www/config/
 
-# Optionally set proper permissions
-RUN chown -R www-data:www-data /var/www/html
+# Set permissions and ownership
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www
 
-# Expose HTTP port
+# Apache config to serve from /var/www/html
 EXPOSE 80
-
-# Apache is already the default CMD in this image
