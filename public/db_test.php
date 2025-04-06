@@ -2,12 +2,12 @@
 // Securely load configuration from one directory above the web root
 $configFile = '/var/www/html/config/nati.php';
 
-if (!file_exists($config_file)) {
+if (!file_exists($configFile)) {
     die("Error: Configuration file not found.");
 }
 
 // Parse ini file
-$config = parse_ini_file($config_file, true);
+$config = parse_ini_file($configFile, true);
 
 // Extract database configuration
 $db = $config['database'];
