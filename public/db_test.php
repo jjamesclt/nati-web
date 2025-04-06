@@ -1,6 +1,6 @@
 <?php
 // Secure config path outside web root
-$configFile = __DIR__ . '/../config/nati.php';
+$configFile = __DIR__ . '/var/www/html/config/nati.php';
 
 // Check if the config file exists
 if (!file_exists($configFile)) {
