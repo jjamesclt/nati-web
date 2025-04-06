@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Load configuration from outside web root
-$configFile = __DIR__ . '../confg/nati.php';
+$configFile = __DIR__ . '/../confg/nati.php';
 
 if (!file_exists($configFile)) {
     die("Error: Configuration file not found at $configFile");
