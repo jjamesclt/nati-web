@@ -1,22 +1,23 @@
 <?php
-// Secure config path outside web root
-$configFile = __DIR__ . '/var/www/html/config/nati.php';
+// Full error reporting for troubleshooting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Check if the config file exists
+// Load configuration from outside web root
+$configFile = __DIR__ . '/../config/nati.php';
+
 if (!file_exists($configFile)) {
-    die("Error: Configuration file not found.");
+    die("Error: Configuration file not found at $configFile");
 }
 
 $config = require $configFile;
 
 if (!is_array($config)) {
-    die("Error: Failed to load configuration array from config file.");
+    die("Error: Configuration file did not return an array.");
 }
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+// Connect to MySQL
 $mysqli = new mysqli(
     $config['host'],
     $config['username'],
@@ -26,8 +27,8 @@ $mysqli = new mysqli(
 );
 
 if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
+    die("MySQL connection failed: " . $mysqli->connect_error);
 }
 
-echo "Database connection successful!";
+echo "✅ Database connection successful!";
 ?>
