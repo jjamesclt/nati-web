@@ -1,6 +1,6 @@
 <?php
 // Securely load configuration from one directory above the web root
-$config_file = __DIR__ . '/../nati.ini';
+$configFile = '/var/www/html/config/nati.php';
 
 if (!file_exists($config_file)) {
     die("Error: Configuration file not found.");
