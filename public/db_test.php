@@ -1,33 +1,33 @@
 <?php
-// Securely load configuration from one directory above the web root
-$configFile = '/var/www/html/config/nati.php';
+// Secure config path outside web root
+$configFile = __DIR__ . '/../config/nati.php';
 
+// Check if the config file exists
 if (!file_exists($configFile)) {
     die("Error: Configuration file not found.");
 }
 
-// Parse ini file
-$config = parse_ini_file($configFile, true);
+$config = require $configFile;
 
-// Extract database configuration
-$db = $config['database'];
-
-// Create database connection
-$conn = new mysqli(
-    $db['host'],
-    $db['username'],
-    $db['password'],
-    $db['database'],
-    (int)$db['port']
-);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Database Connection Failed: " . $conn->connect_error);
-} else {
-    echo "Database Connection Successful!";
+if (!is_array($config)) {
+    die("Error: Failed to load configuration array from config file.");
 }
 
-// Close connection
-$conn->close();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$mysqli = new mysqli(
+    $config['host'],
+    $config['username'],
+    $config['password'],
+    $config['database'],
+    $config['port']
+);
+
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
+
+echo "Database connection successful!";
 ?>
