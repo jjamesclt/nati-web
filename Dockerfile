@@ -7,6 +7,7 @@ RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 # Copy app files
 COPY public/ /var/www/html/
 COPY config/ /var/www/config/
+COPY includes/ /var/www/includes/
 
 # Set permissions and ownership
 RUN chown -R www-data:www-data /var/www \
