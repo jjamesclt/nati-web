@@ -3,6 +3,7 @@
 venv/
 .git
 .replit
+replit.nix
 
 # Byte-compiled files
 __pycache__/
