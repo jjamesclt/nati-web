@@ -1,5 +1,7 @@
 <?php
 // /public/table_viewer.php
+require_once __DIR__ . '/../includes/auth.php';
+include __DIR__ . '/../includes/header.php';
 $config = include(__DIR__ . '/../config/nati.php');
 
 $mysqli = new mysqli(
@@ -14,14 +16,12 @@ if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 
-// Get table list
 $tables = [];
 $result = $mysqli->query("SHOW TABLES");
 while ($row = $result->fetch_array()) {
     $tables[] = $row[0];
 }
 
-// Handle selection
 $selected_table = $_GET['table'] ?? null;
 $rows = [];
 $columns = [];
@@ -62,21 +62,21 @@ if ($selected_table) {
     <select name="table" id="table" onchange="this.form.submit()">
         <option value="">-- Choose a table --</option>
         <?php foreach ($tables as $table): ?>
-            <option value="<?= htmlspecialchars($table) ?>" <?= $selected_table === $table ? 'selected' : '' ?>>
-                <?= htmlspecialchars($table) ?>
+            <option value="<?= htmlspecialchars((string)$table) ?>" <?= $selected_table === $table ? 'selected' : '' ?>>
+                <?= htmlspecialchars((string)$table) ?>
             </option>
         <?php endforeach; ?>
     </select>
 </form>
 
 <?php if ($selected_table): ?>
-    <h2>Table: <?= htmlspecialchars($selected_table) ?></h2>
+    <h2>Table: <?= htmlspecialchars((string)$selected_table) ?></h2>
     <?php if (!empty($rows)): ?>
         <table>
             <thead>
             <tr>
                 <?php foreach ($columns as $col): ?>
-                    <th><?= htmlspecialchars($col) ?></th>
+                    <th><?= htmlspecialchars((string)$col) ?></th>
                 <?php endforeach; ?>
             </tr>
             </thead>
@@ -84,14 +84,14 @@ if ($selected_table) {
             <?php foreach ($rows as $row): ?>
                 <tr>
                     <?php foreach ($columns as $col): ?>
-                        <td><?= htmlspecialchars($row[$col]) ?></td>
+                        <td><?= htmlspecialchars((string)($row[$col] ?? '')) ?></td>
                     <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     <?php elseif (isset($error)): ?>
-        <p style="color: red;">Error: <?= htmlspecialchars($error) ?></p>
+        <p style="color: red;">Error: <?= htmlspecialchars((string)$error) ?></p>
     <?php else: ?>
         <p>No rows found in this table.</p>
     <?php endif; ?>
@@ -99,3 +99,4 @@ if ($selected_table) {
 
 </body>
 </html>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
