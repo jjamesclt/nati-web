@@ -3,6 +3,16 @@
 session_start();
 $config = include(__DIR__ . '/../config/nati.php');
 
+// Select database configuration
+$db_config = 'database';
+
+// Ensure it exists
+if (!isset($config[$db_config])) {
+    die("Configuration for database not found.");
+}
+
+$cfg = $config[$db_config];
+
 $mysqli = new mysqli(
     $config['host'],
     $config['username'],
@@ -10,6 +20,11 @@ $mysqli = new mysqli(
     $config['database'],
     $config['port']
 );
+
+// Check for errors
+if ($conn->connect_error) {
+    die("Connection failed: ".$conn->connect_error);
+}
 
 $errors = [];
 
