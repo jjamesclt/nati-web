@@ -14,11 +14,11 @@ if (!isset($config[$db_config])) {
 $cfg = $config[$db_config];
 
 $mysqli = new mysqli(
-    $config['host'],
-    $config['username'],
-    $config['password'],
-    $config['database'],
-    $config['port']
+    $config['database']['host'],
+    $config['database']['user'],
+    $config['database']['pass'],
+    $config['database']['name'],
+    $config['database']['port']
 );
 
 // Check for errors
