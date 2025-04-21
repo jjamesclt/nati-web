@@ -19,11 +19,11 @@ if (!is_array($config)) {
 
 // Connect to MySQL
 $mysqli = new mysqli(
-    $config['host'],
-    $config['username'],
-    $config['password'],
-    $config['database'],
-    $config['port']
+    $config['database']['host'],
+    $config['database']['user'],
+    $config['database']['pass'],
+    $config['database']['name'],
+    $config['database']['port']
 );
 
 if ($mysqli->connect_error) {

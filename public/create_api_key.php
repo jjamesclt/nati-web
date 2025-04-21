@@ -6,11 +6,11 @@ include __DIR__ . '/../includes/header.php';
 // Connect to your database using your configuration
 $config = include(__DIR__ . '/../config/nati.php');
 $mysqli = new mysqli(
-    $config['host'],
-    $config['username'],
-    $config['password'],
-    $config['database'],
-    $config['port']
+    $config['database']['host'],
+    $config['database']['user'],
+    $config['database']['pass'],
+    $config['database']['name'],
+    $config['database']['port']
 );
 
 if ($mysqli->connect_error) {
