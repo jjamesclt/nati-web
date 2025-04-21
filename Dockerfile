@@ -1,17 +1,28 @@
-# Base image with Apache and PHP
 FROM php:8.2-apache
 
-# Install dependencies
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+# Install OpenSSL + PHP extensions
+RUN apt-get update && \
+    apt-get install -y openssl && \
+    docker-php-ext-install mysqli && \
+    docker-php-ext-enable mysqli
 
-# Copy app files
+# Enable required Apache modules
+RUN a2enmod rewrite ssl && \
+    a2ensite default-ssl
+
+# Create cert directory
+RUN mkdir -p /etc/apache2/ssl
+
+# Copy site files and config
 COPY public/ /var/www/html/
-COPY config/ /var/www/config/
 COPY includes/ /var/www/includes/
+COPY config/ /var/www/config/
+COPY default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+COPY entrypoint.sh /entrypoint.sh
 
-# Set permissions and ownership
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www
+# Set permissions
+RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www && chmod +x /entrypoint.sh
 
-# Apache config to serve from /var/www/html
-EXPOSE 80
+EXPOSE 443
+
+ENTRYPOINT ["/entrypoint.sh"]
