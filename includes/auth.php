@@ -1,7 +1,8 @@
 <?php
 // includes/auth.php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $timeout = 1800; // 30 minutes
 if (isset($_SESSION['last_active']) && time() - $_SESSION['last_active'] > $timeout) {
     session_unset();

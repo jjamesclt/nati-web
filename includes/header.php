@@ -1,9 +1,4 @@
 <!-- /includes/header.php -->
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 <!DOCTYPE html>
 <html><head><title>NATI</title></head><body>
 <?php if (isset($_SESSION['username'])): ?>

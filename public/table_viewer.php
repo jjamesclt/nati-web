@@ -45,7 +45,7 @@ if ($selected_table) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NATI Table Viewer</title>
+    <title>Database Table Viewer</title>
     <style>
         body { font-family: Arial; padding: 20px; }
         table { border-collapse: collapse; width: 100%; margin-top: 10px; }

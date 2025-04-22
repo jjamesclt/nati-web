@@ -1,8 +1,8 @@
-<html>
-  <head>
-    <title>PHP Test</title>
-  </head>
-  <body>
-    <?php echo '<p>Hello World</p>'; ?> 
+<?php
+// /public/index.php
+include __DIR__ . '/../includes/header.php';
+?>
 
-</html>
+<?php echo '<p>Network Analytics and Telemetry Interface</p>'; ?>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
